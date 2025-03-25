@@ -21,6 +21,7 @@ def show_result(a, b, operation, result):
     print("\n════════ Результат ════════")
     print(f" {a} {operation} {b} = {result}")
     print("═══════════════════════════")
+    input("Нажмите клавишу Enter для возврата в меню")
 
 def show_message(message):
     print(f"\n! {message} !")
