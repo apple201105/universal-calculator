@@ -11,4 +11,5 @@ def divide(a, b):
     if b == 0:
         return "Ошибка: деление на ноль"
     return a / b
-
+def exponentiation(a,b):
+    return a ** b
