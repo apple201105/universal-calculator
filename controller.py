@@ -1,6 +1,6 @@
 import pandas as pd
 from datetime import datetime
-from model import add,subtract,multiply,divide
+from model import add,subtract,multiply,divide,exponentiation
 from view import display_menu,get_numbers,show_result,show_message,get_user_name
 
 class CalculatorController:
