@@ -37,7 +37,9 @@ class CalculatorController:
                 elif choice == "/":
                     result = divide(a, b)
                     operation = "/"
-
+                elif choice == "**":
+                    result = exponentiation(a,b)
+                    operation = "**"
                 show_result(a, b, operation, result)
 
                 # Сохраняем операцию в историю
