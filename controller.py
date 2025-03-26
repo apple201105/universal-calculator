@@ -22,7 +22,7 @@ class CalculatorController:
                 self.save_to_excel()
                 break
 
-            elif choice in ["+", "-", "*", "/"]:
+            elif choice in ["+", "-", "*", "/","**"]:
                 a, b = get_numbers()
 
                 if choice == "+":
