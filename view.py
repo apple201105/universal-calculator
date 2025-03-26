@@ -16,13 +16,19 @@ def get_numbers():
     a = float(input("Введите первое число: "))
     b = float(input("Введите второе число: "))
     return a, b
-
+def get_single_number():
+    print("\n════════ Ввод числа ════════")
+    a = float(input("Введите число: "))
+    return a
 def show_result(a, b, operation, result):
     print("\n════════ Результат ════════")
-    print(f" {a} {operation} {b} = {result}")
+    if operation == "root":
+        print(f" √{a} = {result}")
+    else:
+         print(f" {a} {operation} {b} = {result}")
+              
     print("═══════════════════════════")
     input("Нажмите клавишу Enter для возврата в меню")
-
 def show_message(message):
     print(f"\n! {message} !")
 
