@@ -13,3 +13,8 @@ def divide(a, b):
     return a / b
 def exponentiation(a,b):
     return a ** b
+def root (a):
+    if a < 0:
+        print('Ошибка!Корень из отрицательного числа')
+    else:
+         return math.sqrt(a)
