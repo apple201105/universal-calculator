@@ -42,7 +42,7 @@ class CalculatorController:
                     operation = "**"
                 show_result(a, b, operation, result)
 
-                # Сохраняем операцию в историю
+               
                 self.history.append([
                     datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                     self.user_name,
