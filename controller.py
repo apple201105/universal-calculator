@@ -1,7 +1,8 @@
 import pandas as pd
 from datetime import datetime
-from model import add,subtract,multiply,divide,exponentiation
-from view import display_menu,get_numbers,show_result,show_message,get_user_name
+from model import add, subtract, multiply, divide,exponentiation, root
+from view import display_menu, get_numbers, show_result, show_message, get_user_name, get_single_number
+
 
 class CalculatorController:
     def __init__(self):
@@ -38,11 +39,10 @@ class CalculatorController:
                     result = divide(a, b)
                     operation = "/"
                 elif choice == "**":
-                    result = exponentiation(a,b)
+                    result = exponentiation(a, b)
                     operation = "**"
                 show_result(a, b, operation, result)
 
-               
                 self.history.append([
                     datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                     self.user_name,
@@ -51,7 +51,19 @@ class CalculatorController:
                     b,
                     result
                 ])
-
+            elif choice == 'root':
+                a = get_single_number()
+                result = root(a)
+                operation = "root"
+                show_result(a, None, operation, result)
+                self.history.append([
+                    datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                    self.user_name,
+                    operation,
+                    a,
+                    None,
+                    result
+                ])
             else:
                 show_message("Неверный выбор, попробуйте снова")
 
