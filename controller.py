@@ -1,103 +1,151 @@
-import matplotlib.pyplot as plt
-import numpy as np
+from datetime import datetime
+from model import *
+from view import *
 
 
-def display_main_menu():
-    print("\n╔══════════════════════════════╗")
-    print("║       ГЛАВНОЕ МЕНЮ           ║")
-    print("╠══════════════════════════════╣")
-    print("║ 1 - Простой калькулятор      ║")
-    print("║ 2 - Построение графиков      ║")
-    print("║ 0 - Выход                    ║")
-    print("╚══════════════════════════════╝")
-    return input("Выберите действие: ")
+def run_simple_calculator(user_name):
+    while True:
+        operation = display_calc_menu()
+
+        if operation == '0':
+            break
+
+        if operation in ['+', '-', '*', '/', '**']:
+            a, b = get_numbers()
+            if operation == '+':
+                result = add(a, b)
+            elif operation == '-':
+                result = subtract(a, b)
+            elif operation == '*':
+                result = multiply(a, b)
+            elif operation == '/':
+                result = divide(a, b)
+            elif operation == '**':
+                result = exponentiation(a, b)
+
+            show_result(a, b, operation, result)
+            add_to_history([
+                datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                user_name,
+                operation,
+                f"{a}, {b}",
+                result
+            ])
+
+        elif operation == 'root':
+            a = get_single_number()
+            result = root(a)
+            show_result(a, None, '√', result)
+            add_to_history([
+                datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                user_name,
+                '√',
+                str(a),
+                result
+            ])
+
+        elif operation == 'dep':
+            amount, rate, years = get_deposit_params()
+            total = calculate_deposit(amount, rate, years)
+            show_deposit_result(amount, total)
+            add_to_history([
+                datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                user_name,
+                'Вклад',
+                f"{amount} руб, {rate}%, {years} лет",
+                f"{total:.2f} руб"
+            ])
+
+        else:
+            show_message("Неверная операция")
 
 
-def display_calc_menu():
-    print("\n╔══════════════════════════════╗")
-    print("║       КАЛЬКУЛЯТОР           ║")
-    print("╠══════════════════════════════╣")
-    print("║ + - сложение                 ║")
-    print("║ - - вычитание                ║")
-    print("║ * - умножение                ║")
-    print("║ / - деление                  ║")
-    print("║ ** - возведение в степень    ║")
-    print("║ root - квадратный корень     ║")
-    print("║ dep - расчет вклада          ║")
-    print("║ 0 - назад                    ║")
-    print("╚══════════════════════════════╝")
-    return input("Выберите действие: ")
+def run_graph_calculator(user_name):
+    while True:
+        choice = display_graph_menu()
+        if choice == '0':
+            break
+
+        x = np.linspace(-10, 10, 400)
+
+        if choice == '1':
+            k = float(input("Коэффициент k: "))
+            y = linear_function(k, x)
+            show_graph(f"y = {k}x", x, y, f"y = {k}x")
+            add_to_history([
+                datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                user_name,
+                "График: прямая",
+                f"k = {k}",
+                "Построен график"
+            ])
+
+        elif choice == '2':
+            k = float(input("Коэффициент k: "))
+            x = x[x != 0]
+            y = hyperbola(k, x)
+            show_graph(f"y = {k}/x", x, y, f"y = {k}/x")
+            add_to_history([
+                datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                user_name,
+                "График: гипербола",
+                f"k = {k}",
+                "Построен график"
+            ])
+
+        elif choice == '3':
+            a = float(input("a: "))
+            b = float(input("b: "))
+            c = float(input("c: "))
+            y = quadratic(a, b, c, x)
+            show_graph(f"y = {a}x² + {b}x + {c}", x, y, f"y = {a}x² + {b}x + {c}")
+            add_to_history([
+                datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                user_name,
+                "График: парабола",
+                f"a={a}, b={b}, c={c}",
+                "Построен график"
+            ])
+
+        elif choice == '4':
+            a = float(input("a: "))
+            b = float(input("b: "))
+            c = float(input("c: "))
+            d = float(input("d: "))
+            y = cubic(a, b, c, d, x)
+            show_graph(f"y = {a}x³ + {b}x² + {c}x + {d}", x, y, f"y = {a}x³ + {b}x² + {c}x + {d}")
+            add_to_history([
+                datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                user_name,
+                "График: кубическая",
+                f"a={a}, b={b}, c={c}, d={d}",
+                "Построен график"
+            ])
+
+        else:
+            show_message("Неверный выбор")
 
 
-def display_graph_menu():
-    print("\n╔══════════════════════════════╗")
-    print("║    ВЫБЕРИТЕ ТИП ГРАФИКА      ║")
-    print("╠══════════════════════════════╣")
-    print("║ 1 - Прямая пропорциональность║")
-    print("║ 2 - Гипербола                ║")
-    print("║ 3 - Квадратная парабола      ║")
-    print("║ 4 - Кубическая парабола      ║")
-    print("║ 0 - Назад                    ║")
-    print("╚══════════════════════════════╝")
-    return input("Выберите тип графика: ")
+def run_calculator():
+    user_name = get_user_name()
+
+    while True:
+        choice = display_main_menu()
+
+        if choice == '0':
+            filename = save_history_to_excel()
+            show_message(f"До свидания, {user_name}! История сохранена в {filename}")
+            break
+
+        elif choice == '1':
+            run_simple_calculator(user_name)
+
+        elif choice == '2':
+            run_graph_calculator(user_name)
+
+        else:
+            show_message("Неверный выбор")
 
 
-def get_numbers():
-    a = float(input("Введите первое число: "))
-    b = float(input("Введите второе число: "))
-    return a, b
-
-
-def get_single_number():
-    return float(input("Введите число: "))
-
-
-def get_deposit_params():
-    amount = float(input("Сумма вклада: "))
-    rate = float(input("Процентная ставка (%): "))
-    years = float(input("Срок (лет): "))
-    return amount, rate, years
-
-
-def show_result(a, b, op, result):
-    print(f"\n{a} {op} {b} = {result}" if b is not None else f"\n√{a} = {result}")
-    input("Нажмите Enter...")
-
-
-def show_deposit_result(amount, total):
-    print(f"\nИтоговая сумма: {total:.2f}")
-    print(f"Доход: {total - amount:.2f}")
-    input("Нажмите Enter...")
-
-
-def show_graph(title, x, y, label):
-    plt.figure(figsize=(10, 6))
-    ax = plt.gca()
-
-    ax.spines['left'].set_position('zero')
-    ax.spines['bottom'].set_position('zero')
-    ax.spines['right'].set_visible(False)
-    ax.spines['top'].set_visible(False)
-    ax.spines['left'].set_linewidth(2)
-    ax.spines['bottom'].set_linewidth(2)
-    ax.spines['left'].set_color('darkred')
-    ax.spines['bottom'].set_color('darkred')
-
-    ax.plot(x, y, 'b-', linewidth=2, label=label)
-
-    ax.set_title(title, pad=20)
-    ax.set_xlabel('X', loc='right', color='darkred')
-    ax.set_ylabel('Y', loc='top', color='darkred')
-    ax.grid(True, linestyle='--', alpha=0.7)
-    ax.legend()
-
-    plt.tight_layout()
-    plt.show()
-
-
-def show_message(msg):
-    print(f"\n! {msg} !")
-
-
-def get_user_name():
-    return input("Введите ваше имя: ")
+if __name__ == "__main__":
+    run_calculator()
