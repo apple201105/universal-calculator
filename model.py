@@ -50,3 +50,5 @@ def save_history_to_excel(filename="calculator_history.xlsx"):
                      columns=["Дата", "Имя", "Операция", "Параметры", "Результат"])
     df.to_excel(filename, index=False)
     return filename
+def get_time():
+    return datetime.now().strftime("%H:%M %d.%m.%Y")
