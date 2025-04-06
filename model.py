@@ -18,3 +18,5 @@ def root (a):
         print('Ошибка!Корень из отрицательного числа')
     else:
          return math.sqrt(a)
+def calculate_deposit(amount, rate, years):
+     return amount * (1 + rate / 100) ** years
