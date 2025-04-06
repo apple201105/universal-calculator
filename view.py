@@ -53,6 +53,11 @@ def get_deposit_params():
     years = float(input("Введите срок вклада (лет): "))
     return amount, rate, years
 
+def show_deposit_result(amount, total):
+    print(f"\nИтоговая сумма: {total:.2f}")
+    print(f"Доход: {total - amount:.2f}")
+    input("Нажмите Enter...")
+
 def show_result(a, b, operation, result):
     print("\n════════ Результат ════════")
     if operation == "root":
@@ -71,12 +76,49 @@ def get_user_name():
     return input("Введите ваше имя: ")
 
 def show_graph(title, x, y, label):
-    import matplotlib.pyplot as plt
-    plt.figure(figsize=(8, 6))
-    plt.plot(x, y, label=label, color='blue')
-    plt.title(title)
-    plt.xlabel('x')
-    plt.ylabel('y')
-    plt.grid(True)
-    plt.legend()
+    plt.figure(figsize=(10, 7))
+    ax = plt.gca()
+
+    
+    ax.spines['left'].set_position('zero')
+    ax.spines['bottom'].set_position('zero')
+
+  
+    ax.spines['right'].set_visible(False)
+    ax.spines['top'].set_visible(False)
+
+    
+    ax.spines['left'].set_linewidth(2.5)
+    ax.spines['bottom'].set_linewidth(2.5)
+    ax.spines['left'].set_color('#FF4500')  # Оранжево-красный
+    ax.spines['bottom'].set_color('#FF4500')
+
+    
+    ax.xaxis.set_ticks_position('bottom')
+    ax.yaxis.set_ticks_position('left')
+    ax.tick_params(axis='both', which='major', width=2, colors='#FF4500', size=6)
+
+
+    plt.plot(x, y, label=label, color='#1E90FF', linewidth=2.5)  # Синий dodger
+
+  
+    ax.plot(1, 0, ">", transform=ax.get_yaxis_transform(), clip_on=False, color='#FF4500')
+    ax.plot(0, 1, "^", transform=ax.get_xaxis_transform(), clip_on=False, color='#FF4500')
+
+    
+    ax.set_xlabel('Ось X', fontsize=12, color='#FF4500', loc='right')
+    ax.set_ylabel('Ось Y', fontsize=12, color='#FF4500', loc='top')
+
+   
+    plt.title(title, fontsize=14, pad=20)
+    plt.grid(True, linestyle='--', alpha=0.6, color='gray')
+
+ 
+    plt.legend(framealpha=1, frameon=True, edgecolor='black')
+
+   
+    plt.margins(0.1)
+
+    plt.tight_layout()
     plt.show()
+
