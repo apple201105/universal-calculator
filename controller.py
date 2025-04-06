@@ -1,7 +1,7 @@
 import pandas as pd
 from datetime import datetime
-from model import add, subtract, multiply, divide,exponentiation, root
-from view import display_menu, get_numbers, show_result, show_message, get_user_name, get_single_number
+from model import add, subtract, multiply, divide,exponentiation, root,calculate_deposit
+from view import display_menu, get_numbers, show_result, show_message, get_user_name, get_single_number,get_deposit_params
 
 
 class CalculatorController:
@@ -64,6 +64,31 @@ class CalculatorController:
                     None,
                     result
                 ])
+            elif choice.upper() == 'B':
+                amount, rate, years = get_deposit_params()
+                total_amount = calculate_deposit(amount, rate, years)
+                income = total_amount - amount
+
+                print("\n════════ Результат расчета вклада ════════")
+                print(f"Сумма вклада: {amount:.2f} руб")
+                print(f"Процентная ставка: {rate:.2f}%")
+                print(f"Срок вклада: {years} лет")
+                print(f"Итоговая сумма: {total_amount:.2f} руб")
+                print(f"Доход: {income:.2f} руб")
+                print("══════════════════════════════════════════")
+                input("Нажмите Enter для продолжения...")
+
+                self.history.append([
+                    datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                    self.user_name,
+                    "Вклад",
+                    f"Сумма: {amount} руб",
+                    f"Ставка: {rate}%, Срок: {years} лет",
+                    f"Итого: {total_amount:.2f} руб"
+                ])
+
+
+
             else:
                 show_message("Неверный выбор, попробуйте снова")
 
