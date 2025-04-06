@@ -1,7 +1,7 @@
 import math
 import numpy as np
-import pandas as pd
-from datetime import datetime
+
+
 
 def add(a, b):
     return a + b
@@ -44,7 +44,9 @@ history = []
 def add_to_history(record):
     history.append(record)
 
-def save_history_to_excel(filename):
+def save_history_to_excel(filename="calculator_history.xlsx"):
+    import pandas as pd
     df = pd.DataFrame(history,
                      columns=["Дата", "Имя", "Операция", "Параметры", "Результат"])
     df.to_excel(filename, index=False)
+    return filename
