@@ -78,11 +78,13 @@ def show_graph(title, x, y, label):
     ax.spines['bottom'].set_position('zero')
     ax.spines['right'].set_visible(False)
     ax.spines['top'].set_visible(False)
-    ax.spines['left'].set_linewidth(2)
-    ax.spines['bottom'].set_linewidth(2)
+    ax.plot(1, 0, ">", transform=ax.get_yaxis_transform(), clip_on=False, color='darkred')
+    ax.plot(0, 1, "^", transform=ax.get_xaxis_transform(), clip_on=False, color='darkred')
+    ax.spines['left'].set_linewidth(1)
+    ax.spines['bottom'].set_linewidth(1)
     ax.spines['left'].set_color('darkred')
     ax.spines['bottom'].set_color('darkred')
-
+    
     ax.plot(x, y, 'b-', linewidth=2, label=label)
 
     ax.set_title(title, pad=20)
