@@ -22,6 +22,12 @@ def get_single_number():
     print("\n════════ Ввод числа ════════")
     a = float(input("Введите число: "))
     return a
+def get_deposit_params():
+    print("\n════════ Параметры вклада ════════")
+    amount = float(input("Введите сумму вклада (руб): "))
+    rate = float(input("Введите процентную ставку (% годовых): "))
+    years = float(input("Введите срок вклада (лет): "))
+    return amount, rate, years
 def show_result(a, b, operation, result):
     print("\n════════ Результат ════════")
     if operation == "root":
