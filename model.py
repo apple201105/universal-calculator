@@ -21,3 +21,26 @@ def root (a):
          return math.sqrt(a)
 def calculate_deposit(amount, rate, years):
      return amount * (1 + rate / 100) ** years
+
+
+def linear_function(k, x):
+    return k * x
+
+def hyperbola(k, x):
+    return k / x
+
+def quadratic(a, b, c, x):
+    return a * x**2 + b * x + c
+
+def cubic(a, b, c, d, x):
+    return a * x**3 + b * x**2 + c * x + d
+
+history = []
+
+def add_to_history(record):
+    history.append(record)
+
+def save_history_to_excel(filename):
+    df = pd.DataFrame(history,
+                     columns=["Дата", "Имя", "Операция", "Параметры", "Результат"])
+    df.to_excel(filename, index=False)
