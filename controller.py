@@ -1,102 +1,103 @@
-import pandas as pd
-from datetime import datetime
-from model import *
-from view import *
+import matplotlib.pyplot as plt
+import numpy as np
 
 
-def save_history():
-    df = pd.DataFrame(history, columns=["Дата", "Имя", "Операция", "Параметры", "Результат"])
-    df.to_excel("calculator_history.xlsx", index=False)
-    print("История сохранена")
+def display_main_menu():
+    print("\n╔══════════════════════════════╗")
+    print("║       ГЛАВНОЕ МЕНЮ           ║")
+    print("╠══════════════════════════════╣")
+    print("║ 1 - Простой калькулятор      ║")
+    print("║ 2 - Построение графиков      ║")
+    print("║ 0 - Выход                    ║")
+    print("╚══════════════════════════════╝")
+    return input("Выберите действие: ")
 
 
-def simple_calculator(user_name):
-    while True:
-        op = display_calc_menu()
-
-        if op == '0':
-            break
-
-        if op in ['+', '-', '*', '/', '**']:
-            a, b = get_numbers()
-            result = globals()[{'**': 'exponentiation'}.get(op, op)](a, b)
-            show_result(a, b, op, result)
-            history.append([datetime.now(), user_name, op, f"{a}, {b}", result])
-
-        elif op == '√':
-            a = get_single_number()
-            result = root(a)
-            show_result(a, None, '√', result)
-            history.append([datetime.now(), user_name, '√', str(a), result])
-
-        elif op == 'dep':
-            amount, rate, years = get_deposit_params()
-            total = calculate_deposit(amount, rate, years)
-            show_deposit_result(amount, total)
-            history.append([datetime.now(), user_name, 'Вклад',
-                            f"{amount} руб, {rate}%, {years} лет", f"{total:.2f} руб"])
-
-        else:
-            show_message("Неверная операция")
+def display_calc_menu():
+    print("\n╔══════════════════════════════╗")
+    print("║       КАЛЬКУЛЯТОР           ║")
+    print("╠══════════════════════════════╣")
+    print("║ + - сложение                 ║")
+    print("║ - - вычитание                ║")
+    print("║ * - умножение                ║")
+    print("║ / - деление                  ║")
+    print("║ ** - возведение в степень    ║")
+    print("║ root - квадратный корень     ║")
+    print("║ dep - расчет вклада          ║")
+    print("║ 0 - назад                    ║")
+    print("╚══════════════════════════════╝")
+    return input("Выберите действие: ")
 
 
-def graph_calculator(user_name):
-    while True:
-        choice = display_graph_menu()
-        if choice == '0':
-            break
-
-        x = np.linspace(-10, 10, 400)
-        if choice == '1':
-            k = float(input("Коэффициент k: "))
-            y = linear_function(k, x)
-            show_graph(f"y = {k}x", x, y, f"y = {k}x")
-
-        elif choice == '2':
-            k = float(input("Коэффициент k: "))
-            x = x[x != 0]
-            y = hyperbola(k, x)
-            show_graph(f"y = {k}/x", x, y, f"y = {k}/x")
-
-        elif choice == '3':
-            a = float(input("a: "))
-            b = float(input("b: "))
-            c = float(input("c: "))
-            y = quadratic(a, b, c, x)
-            show_graph(f"y = {a}x² + {b}x + {c}", x, y, f"y = {a}x² + {b}x + {c}")
-
-        elif choice == '4':
-            a = float(input("a: "))
-            b = float(input("b: "))
-            c = float(input("c: "))
-            d = float(input("d: "))
-            y = cubic(a, b, c, d, x)
-            show_graph(f"y = {a}x³ + {b}x² + {c}x + {d}", x, y, f"y = {a}x³ + {b}x² + {c}x + {d}")
-
-        else:
-            show_message("Неверный выбор")
+def display_graph_menu():
+    print("\n╔══════════════════════════════╗")
+    print("║    ВЫБЕРИТЕ ТИП ГРАФИКА      ║")
+    print("╠══════════════════════════════╣")
+    print("║ 1 - Прямая пропорциональность║")
+    print("║ 2 - Гипербола                ║")
+    print("║ 3 - Квадратная парабола      ║")
+    print("║ 4 - Кубическая парабола      ║")
+    print("║ 0 - Назад                    ║")
+    print("╚══════════════════════════════╝")
+    return input("Выберите тип графика: ")
 
 
-def main():
-    user_name = get_user_name()
-
-    while True:
-        choice = display_main_menu()
-
-        if choice == '0':
-            show_message(f"До свидания, {user_name}!")
-            save_history()
-            break
-
-        elif choice == '1':
-            simple_calculator(user_name)
-
-        elif choice == '2':
-            graph_calculator(user_name)
-
-        else:
-            show_message("Неверный выбор")
+def get_numbers():
+    a = float(input("Введите первое число: "))
+    b = float(input("Введите второе число: "))
+    return a, b
 
 
-if __name__ == "__main__":
-    main()
+def get_single_number():
+    return float(input("Введите число: "))
+
+
+def get_deposit_params():
+    amount = float(input("Сумма вклада: "))
+    rate = float(input("Процентная ставка (%): "))
+    years = float(input("Срок (лет): "))
+    return amount, rate, years
+
+
+def show_result(a, b, op, result):
+    print(f"\n{a} {op} {b} = {result}" if b is not None else f"\n√{a} = {result}")
+    input("Нажмите Enter...")
+
+
+def show_deposit_result(amount, total):
+    print(f"\nИтоговая сумма: {total:.2f}")
+    print(f"Доход: {total - amount:.2f}")
+    input("Нажмите Enter...")
+
+
+def show_graph(title, x, y, label):
+    plt.figure(figsize=(10, 6))
+    ax = plt.gca()
+
+    ax.spines['left'].set_position('zero')
+    ax.spines['bottom'].set_position('zero')
+    ax.spines['right'].set_visible(False)
+    ax.spines['top'].set_visible(False)
+    ax.spines['left'].set_linewidth(2)
+    ax.spines['bottom'].set_linewidth(2)
+    ax.spines['left'].set_color('darkred')
+    ax.spines['bottom'].set_color('darkred')
+
+    ax.plot(x, y, 'b-', linewidth=2, label=label)
+
+    ax.set_title(title, pad=20)
+    ax.set_xlabel('X', loc='right', color='darkred')
+    ax.set_ylabel('Y', loc='top', color='darkred')
+    ax.grid(True, linestyle='--', alpha=0.7)
+    ax.legend()
+
+    plt.tight_layout()
+    plt.show()
+
+
+def show_message(msg):
+    print(f"\n! {msg} !")
+
+
+def get_user_name():
+    return input("Введите ваше имя: ")
