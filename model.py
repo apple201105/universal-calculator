@@ -52,3 +52,54 @@ def save_history_to_excel(filename="calculator_history.xlsx"):
     return filename
 def get_time():
     return datetime.now().strftime("%H:%M %d.%m.%Y")
+
+
+
+def convert_distance(value, from_unit, to_unit):
+    units = {
+        'mm': 0.001,
+        'cm': 0.01,
+        'm': 1,
+        'km': 1000,
+        'in': 0.0254,
+        'ft': 0.3048,
+        'yd': 0.9144,
+        'mi': 1609.34
+    }
+    return value * units[from_unit] / units[to_unit]
+
+def convert_area(value, from_unit, to_unit):
+    units = {
+        'mm²': 1e-6,
+        'cm²': 1e-4,
+        'm²': 1,
+        'km²': 1e6,
+        'ha': 1e4,
+        'in²': 0.00064516,
+        'ft²': 0.092903,
+        'ac': 4046.86
+    }
+    return value * units[from_unit] / units[to_unit]
+
+def convert_volume(value, from_unit, to_unit):
+    units = {
+        'ml': 1e-6,
+        'l': 0.001,
+        'm³': 1,
+        'cm³': 1e-6,
+        'in³': 1.63871e-5,
+        'ft³': 0.0283168,
+        'gal': 0.00378541
+    }
+    return value * units[from_unit] / units[to_unit]
+
+def convert_time(value, from_unit, to_unit):
+    units = {
+        'ms': 0.001,
+        's': 1,
+        'min': 60,
+        'h': 3600,
+        'd': 86400,
+        'wk': 604800
+    }
+    return value * units[from_unit] / units[to_unit]
