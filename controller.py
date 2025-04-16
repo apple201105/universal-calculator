@@ -9,7 +9,7 @@ def run_converter(user_name):
         if choice == '0':
             break
 
-        if choice == '1':  # Длина
+        if choice == '1':  
             display_distance_units()
             value, from_unit, to_unit = get_conversion_input()
             result = convert_distance(value, from_unit, to_unit)
@@ -22,7 +22,7 @@ def run_converter(user_name):
                 f"{result:.4f} {to_unit}"
             ])
 
-        elif choice == '2':  # Площадь
+        elif choice == '2':  
             display_area_units()
             value, from_unit, to_unit = get_conversion_input()
             result = convert_area(value, from_unit, to_unit)
@@ -35,7 +35,7 @@ def run_converter(user_name):
                 f"{result:.4f} {to_unit}"
             ])
 
-        elif choice == '3':  # Объем
+        elif choice == '3':  
             display_volume_units()
             value, from_unit, to_unit = get_conversion_input()
             result = convert_volume(value, from_unit, to_unit)
@@ -48,7 +48,7 @@ def run_converter(user_name):
                 f"{result:.4f} {to_unit}"
             ])
 
-        elif choice == '4':  # Время
+        elif choice == '4': 
             display_time_units()
             value, from_unit, to_unit = get_conversion_input()
             result = convert_time(value, from_unit, to_unit)
