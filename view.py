@@ -92,9 +92,34 @@ def display_time_units():
     print("wk - недели")
 
 def get_conversion_input():
-    value = float(input("Введите значение: "))
-    from_unit = input("Из какой единицы: ").strip()
-    to_unit = input("В какую единицу: ").strip()
+
+    while True:
+        try:
+            value = float(input("Введите значение: "))
+            break
+        except ValueError:
+            print("Ошибка: Введите число")
+
+
+    while True:
+        from_unit = input("Из какой единицы: ").strip()
+        if not from_unit:
+            print("Ошибка: Введите название единицы измерения (не оставляйте пустым)")
+        elif from_unit.replace('.', '', 1).isdigit():
+            print("Ошибка: Единица измерения должна быть текстом, а не числом")
+        else:
+            break
+
+
+    while True:
+        to_unit = input("В какую единицу: ").strip()
+        if not to_unit:
+            print("Ошибка: Введите название единицы измерения (не оставляйте пустым)")
+        elif to_unit.replace('.', '', 1).isdigit():
+            print("Ошибка: Единица измерения должна быть текстом, а не числом")
+        else:
+            break
+
     return value, from_unit, to_unit
 
 def show_conversion_result(value, from_unit, converted_value, to_unit):
