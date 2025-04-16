@@ -92,8 +92,8 @@ def display_time_units():
     print("wk - недели")
 
 def get_conversion_input():
-    # Списки допустимых единиц измерения по категориям
-    linear_units = ["mm", "cm", "m", "km", "in", "ft", "yd", "mi"]  # Добавлены линейные единицы
+   
+    linear_units = ["mm", "cm", "m", "km", "in", "ft", "yd", "mi"]  
     area_units = ["mm²", "cm²", "m²", "km²", "ha", "in²", "ft²", "ac"]
     volume_units = ["ml", "l", "m³", "cm³", "in³", "ft³", "gal"]
     time_units = ["ms", "s", "min", "h", "d", "wk"]
@@ -105,7 +105,7 @@ def get_conversion_input():
             value = float(input("Введите значение: "))
             break
         except ValueError:
-            print("Ошибка: Введите число (например, 5 или 3.14)")
+            print("Ошибка: Введите число ")
 
  
     def check_unit(unit_type):
