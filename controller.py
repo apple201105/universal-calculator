@@ -2,7 +2,67 @@ from datetime import datetime
 from model import *
 from view import *
 
+def run_converter(user_name):
+    while True:
+        choice = display_converter_menu()
 
+        if choice == '0':
+            break
+
+        if choice == '1':  # Длина
+            display_distance_units()
+            value, from_unit, to_unit = get_conversion_input()
+            result = convert_distance(value, from_unit, to_unit)
+            show_conversion_result(value, from_unit, result, to_unit)
+            add_to_history([
+                get_time(),
+                user_name,
+                "Конвертер: длина",
+                f"{value} {from_unit} → {to_unit}",
+                f"{result:.4f} {to_unit}"
+            ])
+
+        elif choice == '2':  # Площадь
+            display_area_units()
+            value, from_unit, to_unit = get_conversion_input()
+            result = convert_area(value, from_unit, to_unit)
+            show_conversion_result(value, from_unit, result, to_unit)
+            add_to_history([
+                get_time(),
+                user_name,
+                "Конвертер: площадь",
+                f"{value} {from_unit} → {to_unit}",
+                f"{result:.4f} {to_unit}"
+            ])
+
+        elif choice == '3':  # Объем
+            display_volume_units()
+            value, from_unit, to_unit = get_conversion_input()
+            result = convert_volume(value, from_unit, to_unit)
+            show_conversion_result(value, from_unit, result, to_unit)
+            add_to_history([
+                get_time(),
+                user_name,
+                "Конвертер: объем",
+                f"{value} {from_unit} → {to_unit}",
+                f"{result:.4f} {to_unit}"
+            ])
+
+        elif choice == '4':  # Время
+            display_time_units()
+            value, from_unit, to_unit = get_conversion_input()
+            result = convert_time(value, from_unit, to_unit)
+            show_conversion_result(value, from_unit, result, to_unit)
+            add_to_history([
+                get_time(),
+                user_name,
+                "Конвертер: время",
+                f"{value} {from_unit} → {to_unit}",
+                f"{result:.4f} {to_unit}"
+            ])
+
+        else:
+            show_message("Неверный выбор")
 def run_simple_calculator(user_name):
     while True:
         operation = display_calc_menu()
@@ -86,6 +146,8 @@ def run_calculator():
             run_simple_calculator(user_name)
         elif choice == '2':
             run_graph_calculator(user_name)
+        elif choice == '3':
+            run_converter(user_name)
         else:
             show_message("Неверный выбор")
 
