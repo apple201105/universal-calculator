@@ -8,10 +8,10 @@ def display_main_menu():
     print("╠══════════════════════════════╣")
     print("║ 1 - Простой калькулятор      ║")
     print("║ 2 - Построение графиков      ║")
+    print("║ 3 - Конвертер единиц         ║")
     print("║ 0 - Выход                    ║")
     print("╚══════════════════════════════╝")
     return input("Выберите действие: ")
-
 
 def display_calc_menu():
     print("\n╔══════════════════════════════╗")
@@ -41,6 +41,65 @@ def display_graph_menu():
     print("╚══════════════════════════════╝")
     return input("Выберите тип графика: ")
 
+
+def display_converter_menu():
+    print("\n╔══════════════════════════════╗")
+    print("║    КОНВЕРТЕР ЕДИНИЦ         ║")
+    print("╠══════════════════════════════╣")
+    print("║ 1 - Длина                    ║")
+    print("║ 2 - Площадь                  ║")
+    print("║ 3 - Объем                    ║")
+    print("║ 4 - Время                    ║")
+    print("║ 0 - Назад                    ║")
+    print("╚══════════════════════════════╝")
+    return input("Выберите тип конвертации: ")
+
+def display_distance_units():
+    print("\nДоступные единицы длины:")
+    print("mm - миллиметры, cm - сантиметры")
+    print("m - метры, km - километры")
+    print("in - дюймы, ft - футы")
+    print("yd - ярды, mi - мили")
+
+def display_area_units():
+    print("\nДоступные единицы площади:")
+    print("mm² - квадратные миллиметры")
+    print("cm² - квадратные сантиметры")
+    print("m² - квадратные метры")
+    print("km² - квадратные километры")
+    print("ha - гектары")
+    print("in² - квадратные дюймы")
+    print("ft² - квадратные футы")
+    print("ac - акры")
+
+def display_volume_units():
+    print("\nДоступные единицы объема:")
+    print("ml - миллилитры")
+    print("l - литры")
+    print("m³ - кубические метры")
+    print("cm³ - кубические сантиметры")
+    print("in³ - кубические дюймы")
+    print("ft³ - кубические футы")
+    print("gal - галлоны")
+
+def display_time_units():
+    print("\nДоступные единицы времени:")
+    print("ms - миллисекунды")
+    print("s - секунды")
+    print("min - минуты")
+    print("h - часы")
+    print("d - дни")
+    print("wk - недели")
+
+def get_conversion_input():
+    value = float(input("Введите значение: "))
+    from_unit = input("Из какой единицы: ").strip()
+    to_unit = input("В какую единицу: ").strip()
+    return value, from_unit, to_unit
+
+def show_conversion_result(value, from_unit, converted_value, to_unit):
+    print(f"\n{value} {from_unit} = {converted_value:.6f} {to_unit}")
+    input("Нажмите Enter...")
 
 def get_numbers():
     a = float(input("Введите первое число: "))
