@@ -92,35 +92,57 @@ def display_time_units():
     print("wk - недели")
 
 def get_conversion_input():
+    # Списки допустимых единиц измерения по категориям
+    linear_units = ["mm", "cm", "m", "km", "in", "ft", "yd", "mi"]  # Добавлены линейные единицы
+    area_units = ["mm²", "cm²", "m²", "km²", "ha", "in²", "ft²", "ac"]
+    volume_units = ["ml", "l", "m³", "cm³", "in³", "ft³", "gal"]
+    time_units = ["ms", "s", "min", "h", "d", "wk"]
+    all_units = linear_units + area_units + volume_units + time_units
 
+  
     while True:
         try:
             value = float(input("Введите значение: "))
             break
         except ValueError:
-            print("Ошибка: Введите число")
+            print("Ошибка: Введите число (например, 5 или 3.14)")
+
+ 
+    def check_unit(unit_type):
+        while True:
+            unit = input(f"{unit_type}: ").strip()
+            if not unit:
+                print("Ошибка: Введите название единицы измерения")
+                continue
+
+            if unit.replace('.', '', 1).isdigit():
+                print("Ошибка: Единица измерения должна быть текстом")
+                continue
+
+     
+            if unit not in all_units:
+                print("Ошибка: Недопустимая единица измерения")
+                print("\nДоступные единицы:")
+                print("Линейные:", ", ".join(linear_units))
+                print("Площадь:", ", ".join(area_units))
+                print("Объем:", ", ".join(volume_units))
+                print("Время:", ", ".join(time_units))
+                continue
+
+            return unit
 
 
-    while True:
-        from_unit = input("Из какой единицы: ").strip()
-        if not from_unit:
-            print("Ошибка: Введите название единицы измерения (не оставляйте пустым)")
-        elif from_unit.replace('.', '', 1).isdigit():
-            print("Ошибка: Единица измерения должна быть текстом, а не числом")
-        else:
-            break
+    print("\nДоступные единицы измерения:")
+    print("Линейные:", ", ".join(linear_units))
+    print("Площадь:", ", ".join(area_units))
+    print("Объем:", ", ".join(volume_units))
+    print("Время:", ", ".join(time_units))
 
-
-    while True:
-        to_unit = input("В какую единицу: ").strip()
-        if not to_unit:
-            print("Ошибка: Введите название единицы измерения (не оставляйте пустым)")
-        elif to_unit.replace('.', '', 1).isdigit():
-            print("Ошибка: Единица измерения должна быть текстом, а не числом")
-        else:
-            break
+    from_unit = check_unit("Из какой единицы")
+    to_unit = check_unit("В какую единицу")
 
     return value, from_unit, to_unit
+
 
 def show_conversion_result(value, from_unit, converted_value, to_unit):
     print(f"\n{value} {from_unit} = {converted_value:.6f} {to_unit}")
